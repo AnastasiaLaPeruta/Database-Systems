@@ -2,9 +2,19 @@
 
 
 -- 1. my answer
+SELECT *                                                    
+FROM People  
+WHERE pid IN (  
+    SELECT pid  
+    FROM Customers  
+); 
 
 
--- Difference: ; AI answer /10
+-- Difference: formatting & wrote out question as a comment; AI answer 9/10
+-- 1. Get all the People data for people who are customers.
+SELECT *
+FROM People
+WHERE pid IN (SELECT pid FROM Customers);
 
 
 
