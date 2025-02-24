@@ -22,6 +22,13 @@ WHERE pid IN (SELECT pid FROM Customers);
 
 
 -- 2. my answer
+SELECT *  
+FROM People  
+WHERE pid IN (  
+    SELECT pid  
+    FROM Agents  
+); 
+ 
 
 
 -- Difference: ; AI answer /10
