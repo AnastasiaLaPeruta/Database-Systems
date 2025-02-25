@@ -204,6 +204,14 @@ ORDER BY homeCity DESC;
 
 
 -- 9. my answer
+SELECT DISTINCT prodid  
+FROM Products  
+WHERE prodId IN (  
+    SELECT agentid  
+    FROM Orders
+    )
+ORDER BY prodid DESC; 
+
 
 
 -- Difference: ; AI answer /10
