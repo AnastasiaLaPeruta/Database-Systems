@@ -204,17 +204,37 @@ ORDER BY homeCity DESC;
 
 
 -- 9. my answer
-SELECT DISTINCT prodid  
-FROM Products  
-WHERE prodId IN (  
-    SELECT agentid  
-    FROM Orders
-    )
-ORDER BY prodid DESC; 
+SELECT DISTINCT prodid
+FROM Orders
+WHERE agentid IN (
+	SELECT agentid 
+	FROM Orders
+	WHERE custid IN (
+		SELECT pid
+		FROM People
+		WHERE homeCity = 'Saginaw'
+	)
+)
+ORDER BY prodid DESC;
 
 
 
--- Difference: ; AI answer /10
+-- Difference: Capitalization & wrote out question as a comment; AI answer 10/10
+-- 9. Get the unique ids of products ordered through any agent who takes at least one order
+--    from a customer in Saginaw, sorted by id from highest to lowest.
+SELECT DISTINCT prodId
+FROM Orders
+WHERE agentId IN (
+      SELECT agentId
+      FROM Orders
+      WHERE custId IN (
+            SELECT pid
+            FROM People
+            WHERE homeCity = 'Saginaw'
+      )
+)
+ORDER BY prodId DESC;
+
 
 
 
