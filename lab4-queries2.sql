@@ -176,8 +176,28 @@ ORDER BY lastName ASC;
 
 
 -- 8. my answer
+SELECT DISTINCT homeCity, DOB  
+FROM People  
+WHERE pid IN (  
+    SELECT agentid  
+    FROM Orders
+    WHERE custid = '007'
+)
+ORDER BY homeCity DESC; 
 
--- Difference: ; AI answer /10
+
+-- Difference: no quotes & wrote out question as a comment; AI answer /10
+-- 8. Get the home city and birthday of agents booking an order for the customer whose pid is 007,
+--    sorted by home city from Z to A.
+SELECT DISTINCT homeCity, DOB
+FROM People
+WHERE pid IN (
+      SELECT agentId
+      FROM Orders
+      WHERE custId = 007
+)
+ORDER BY homeCity DESC;
+
 
 
 
