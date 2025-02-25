@@ -117,16 +117,59 @@ ORDER BY custId ASC;
 
 
 -- 6. my answer
+SELECT pid  
+FROM Customers  
+WHERE pid IN (  
+    SELECT custid  
+    FROM Orders
+	WHERE prodid = 'p01'
+    INTERSECT 
+    SELECT custid  
+    FROM Orders
+	WHERE prodid = 'p03'
+)
+ORDER BY pid DESC; 
 
--- Difference: ; AI answer /10
+-- Difference: used AND instead of INTERSECT, formatting & wrote out question as a comment; AI answer 10/10
+-- 6. Get the ID of customers who ordered both products p01 and p03.
+--    List the IDs in order from highest to lowest. Include each ID only once.
+SELECT DISTINCT custId
+FROM Orders
+WHERE custId IN (SELECT custId FROM Orders WHERE prodId = 'p01')
+  AND custId IN (SELECT custId FROM Orders WHERE prodId = 'p03')
+ORDER BY custId DESC;
 
 
 
 
 
 -- 7. my answer
+SELECT firstName, lastName  
+FROM People  
+WHERE pid IN (  
+    SELECT agentid  
+    FROM Orders
+	WHERE prodid = 'p05'
+    UNION 
+    SELECT agentid  
+    FROM Orders
+	WHERE prodid = 'p07'
+)
+ORDER BY lastName ASC; 
 
--- Difference: ; AI answer /10
+
+-- Difference: used IN instead of UNION & wrote out question as a comment; AI answer 10/10
+-- 7. Get the first and last names of agents who sold products p05 or p07,
+--    in order by last name from A to Z.
+SELECT firstName, lastName
+FROM People
+WHERE pid IN (
+      SELECT agentId
+      FROM Orders
+      WHERE prodId IN ('p05', 'p07')
+)
+ORDER BY lastName ASC;
+
 
 
 
