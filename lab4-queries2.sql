@@ -1,4 +1,4 @@
--- ANASTASIA LAPERUTA, 2/24/2025, LAB4-QUERIES2
+-- ANASTASIA LAPERUTA, 2/25/2025, LAB4-QUERIES2
 
 
 -- 1. my answer
@@ -186,7 +186,7 @@ WHERE pid IN (
 ORDER BY homeCity DESC; 
 
 
--- Difference: no quotes & wrote out question as a comment; AI answer /10
+-- Difference: no quotes & wrote out question as a comment; AI answer 10/10
 -- 8. Get the home city and birthday of agents booking an order for the customer whose pid is 007,
 --    sorted by home city from Z to A.
 SELECT DISTINCT homeCity, DOB
@@ -241,6 +241,37 @@ ORDER BY prodId DESC;
 
 
 -- 10. my answer
+SELECT lastName, homeCity
+FROM People
+WHERE pid IN (
+	SELECT pid      -- realized after seeing AI answer that this was unnecessary 
+	FROM Customers  --but maybe this is just a good check to have to guarantee that we are actually looking at valid customer pids
+	WHERE pid IN (
+		SELECT custid
+		FROM Orders 
+		WHERE agentid IN (
+			SELECT pid 
+			FROM People
+			WHERE homeCity = 'Regina' OR homeCity = 'Pinner'
+		)
+	)
+)
+ORDER BY lastName ASC;
 
 
--- Difference: ; AI answer /10
+-- Difference: Less subqueries, used IN insead of OR, wrote out question as comment, & used DISTINCT; AI answer 10/10
+-- 10. Get the last name and home city for all customers who place orders through agents
+--     in Regina or Pinner, in order by last name from A to Z.
+SELECT DISTINCT lastName, homeCity
+FROM People
+WHERE pid IN (
+      SELECT custId
+      FROM Orders
+      WHERE agentId IN (
+            SELECT pid
+            FROM People
+            WHERE homeCity IN ('Regina', 'Pinner')
+      )
+)
+ORDER BY lastName ASC;
+
