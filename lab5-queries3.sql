@@ -7,7 +7,7 @@ FROM People
 INNER JOIN Customers ON People.pid = Customers.pid;
 
 
--- Difference: uses alias and regular join; AI answer 8/10
+-- Difference: uses aliases and regular join; AI answer 9/10
 SELECT p.*
 FROM People p
 JOIN Customers c ON p.pid = c.pid;
@@ -19,11 +19,16 @@ JOIN Customers c ON p.pid = c.pid;
 
 
 -- 2. my answer
-
+SELECT *  
+FROM People  
+INNER JOIN Agents ON People.pid = Agents.pid;
  
 
 
--- Difference: ; AI answer /10
+-- Difference: uses aliases and regular join; AI answer 9/10
+SELECT p.*
+FROM People p
+JOIN Agents a ON p.pid = a.pid;
 
 
 
