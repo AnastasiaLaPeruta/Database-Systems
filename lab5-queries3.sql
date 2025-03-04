@@ -35,9 +35,18 @@ JOIN Agents a ON p.pid = a.pid;
 
 
 -- 3. my answer
+SELECT p.*, a.*
+FROM People p
+JOIN Customers c ON p.pid = c.pid
+JOIN Agents a ON p.pid = a.pid;
  
 
--- Difference: ; AI answer /10
+-- Difference: doesn't show agents columns; AI answer 5/10
+SELECT p.*
+FROM People p
+JOIN Customers c ON p.pid = c.pid
+JOIN Agents a ON p.pid = a.pid;
+
 
 
 
