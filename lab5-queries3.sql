@@ -76,10 +76,21 @@ WHERE c.pid NOT IN (SELECT custId FROM Orders);
 
 
 -- 5. my answer
+SELECT p.firstName 
+FROM People p  
+INNER JOIN Customers c ON p.pid = c.pid 
+LEFT OUTER JOIN Orders o ON c.pid = o.custId 
+WHERE o.custId IS NULL;
 
 
 
--- Difference: ; AI answer /10
+-- Difference: doesnt specify that its an inner join; AI answer 9/10
+SELECT p.firstName
+FROM People p
+JOIN Customers c ON p.pid = c.pid
+LEFT OUTER JOIN Orders o ON c.pid = o.custId
+WHERE o.custId IS NULL;
+
 
 
 
