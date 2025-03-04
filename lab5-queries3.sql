@@ -140,6 +140,15 @@ ORDER BY a.commissionPct DESC;
 
 
 -- 8. my answer
+SELECT p.lastName, p.homeCity
+FROM People p
+JOIN Agents a ON p.pid = a.pid
+WHERE p.homeCity IN (SELECT count(city), name
+						FROM Products
+						GROUP BY name
+						HAVING count(city) >= 0
+					)
+ORDER BY a.commissionPct DESC;
 
 
 -- Difference: ; AI answer /10
