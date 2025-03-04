@@ -119,10 +119,21 @@ ORDER BY a.commissionPct DESC;
 
 
 -- 7. my answer
+SELECT DISTINCT People.lastName, People.homeCity, a.commissionPct
+FROM People
+JOIN Agents a ON People.pid = a.pid 
+JOIN Orders o ON a.pid = o.agentId
+WHERE o.custId = 001
+ORDER BY a.commissionPct DESC;
 
 
--- Difference: ; AI answer /10
-
+-- Difference: used aliases for all & didn't use DISTINCT; AI answer 9/10
+SELECT p.lastName, p.homeCity, a.commissionPct
+FROM People p
+JOIN Agents a ON p.pid = a.pid
+JOIN Orders o ON a.pid = o.agentId
+WHERE o.custId = 001
+ORDER BY a.commissionPct DESC;
 
 
 
