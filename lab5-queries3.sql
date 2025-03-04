@@ -98,10 +98,21 @@ WHERE o.custId IS NULL;
 
 
 -- 6. my answer
+SELECT DISTINCT a.pid, a.commissionPct 
+FROM Agents a
+JOIN Orders o ON a.pid = o.agentId 
+WHERE o.custId = 007
+ORDER BY commissionPCT DESC;
 
 
 
--- Difference: ; AI answer /10
+
+-- Difference: didn't use DISTINCT, specified a for ORDER BY; AI answer 9/10
+SELECT a.pid, a.commissionPct
+FROM Agents a
+JOIN Orders o ON a.pid = o.agentId
+WHERE o.custId = 007
+ORDER BY a.commissionPct DESC;
 
 
 
