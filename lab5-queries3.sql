@@ -1,4 +1,4 @@
--- ANASTASIA LAPERUTA, 3/3/2025, LAB5-QUERIES3
+-- ANASTASIA LAPERUTA, 3/4/2025, LAB5-QUERIES3
 
 
 -- 1. my answer
@@ -140,18 +140,42 @@ ORDER BY a.commissionPct DESC;
 
 
 -- 8. my answer
+SELECT lastName, homeCity
+FROM People p
+JOIN Agents a ON p.pid = a.pid
+WHERE p.homeCity IN (
+    SELECT city
+    FROM Products
+    GROUP BY city
+    HAVING COUNT(DISTINCT prodId) = (
+        SELECT MIN(product_count)
+        FROM (
+            SELECT COUNT(DISTINCT prodId) AS product_count, city
+            FROM Products
+            GROUP BY city
+        ) AS product_counts
+    )
+);
+
+
+
+-- Difference: uses alias throughout & uses 'subquery'; AI answer 10/10
 SELECT p.lastName, p.homeCity
 FROM People p
 JOIN Agents a ON p.pid = a.pid
-WHERE p.homeCity IN (SELECT count(city), name
-						FROM Products
-						GROUP BY name
-						HAVING count(city) >= 0
-					)
-ORDER BY a.commissionPct DESC;
-
-
--- Difference: ; AI answer /10
+WHERE p.homeCity IN (
+    SELECT city
+    FROM Products
+    GROUP BY city
+    HAVING COUNT(DISTINCT prodId) = (
+        SELECT MIN(product_count)
+        FROM (
+            SELECT COUNT(DISTINCT prodId) AS product_count
+            FROM Products
+            GROUP BY city
+        ) subquery
+    )
+);
 
 
 
@@ -159,10 +183,47 @@ ORDER BY a.commissionPct DESC;
 
 
 -- 9. my answer
+SELECT DISTINCT Products.name, Products.prodId
+FROM Products
+JOIN Orders o ON Products.prodId = o.prodId
+JOIN Agents a ON o.agentId = a.pid
+JOIN Customers c ON o.custId = c.pid
+JOIN People p ON c.pid = p.pid
+WHERE p.homeCity = 'Oyster Bay'
+ORDER BY Products.name ASC;
 
 
 
--- Difference: ; AI answer /10
+
+-- Difference: uses both methods (subqueries and joins) & uses aliases more & both methods give different answers; AI answer 5/10
+SELECT DISTINCT pr.name, pr.prodId
+FROM Products pr
+JOIN Orders o ON pr.prodId = o.prodId
+JOIN Agents a ON o.agentId = a.pid
+JOIN Customers c ON o.custId = c.pid
+JOIN People p ON c.pid = p.pid
+WHERE p.homeCity = 'Oyster Bay'
+ORDER BY pr.name ASC;
+
+SELECT DISTINCT name, prodId
+FROM Products
+WHERE prodId IN (
+    SELECT o.prodId
+    FROM Orders o
+    WHERE o.agentId IN (
+        SELECT a.pid
+        FROM Agents a
+        WHERE a.pid IN (
+            SELECT o.agentId
+            FROM Orders o
+            JOIN Customers c ON o.custId = c.pid
+            JOIN People p ON c.pid = p.pid
+            WHERE p.homeCity = 'Oyster Bay'
+        )
+    )
+)
+ORDER BY name ASC;
+
 
 
 
@@ -170,8 +231,25 @@ ORDER BY a.commissionPct DESC;
 
 
 -- 10. my answer
+SELECT p.firstName AS PFirst, p.lastName AS PLast, 
+       pe.firstName AS PeFirst, pe.lastName AS PeLast, 
+       p.homeCity
+FROM People p
+JOIN Customers c ON p.pid = c.pid
+JOIN People pe ON p.homeCity = pe.homeCity
+JOIN Agents a ON pe.pid = a.pid
+WHERE p.pid != pe.pid; -- makes sure not same person
 
 
--- Difference: ; AI answer /10
+-- Difference: uses <> and abbreviations that don't make sense ; AI answer 7/10
+SELECT c.firstName AS CustomerFirst, c.lastName AS CustomerLast, 
+       a.firstName AS AgentFirst, a.lastName AS AgentLast, 
+       c.homeCity
+FROM People c
+JOIN Customers cu ON c.pid = cu.pid
+JOIN People a ON c.homeCity = a.homeCity
+JOIN Agents ag ON a.pid = ag.pid
+WHERE c.pid <> a.pid;
+
 
 
