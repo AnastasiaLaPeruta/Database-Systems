@@ -53,9 +53,22 @@ JOIN Agents a ON p.pid = a.pid;
 
 
 -- 4. my answer
+SELECT firstName 
+FROM People p  
+WHERE pid IN (SELECT pid
+		FROM Customers 
+		WHERE pid NOT IN(
+    SELECT custId 
+    FROM Orders)
+);
 
 
--- Difference:; AI answer /10
+-- Difference: Uses join & aliases; AI answer 5/10
+SELECT p.firstName
+FROM People p
+JOIN Customers c ON p.pid = c.pid
+WHERE c.pid NOT IN (SELECT custId FROM Orders);
+
 
 
 
