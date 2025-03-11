@@ -84,11 +84,27 @@ ORDER BY p.lastName DESC;
 
 
 -- 5. my answer
+SELECT pe.firstName AS cust_name, pr.name AS prod_name, pe2.firstName AS agent_name
+FROM People pe
+INNER JOIN Customers c ON pe.pid = c.pid 
+INNER JOIN Orders o ON c.pid = o.custId
+INNER JOIN Products pr ON o.prodId = pr.prodId
+INNER JOIN People pe2 ON o.agentId = pe2.pid
+WHERE pe2.homeCity = 'Regina';
 
 
-
--- Difference:; AI answer /10
-
+-- Difference: wrote out full name, added comment, different FROM table and order of joins, not specify inner, different alias names; AI answer 10/10
+-- 5. Display the names of all customers who bought products from agents based in Regina along with the names of the products they ordered, and the names of the agents who sold them.
+SELECT DISTINCT c.firstName || ' ' || c.lastName AS customer_name,
+       p.name AS product_name,
+       a.firstName || ' ' || a.lastName AS agent_name
+FROM Orders o
+JOIN Customers cu ON o.custId = cu.pid
+JOIN People c ON cu.pid = c.pid
+JOIN Products p ON o.prodId = p.prodId
+JOIN Agents ag ON o.agentId = ag.pid
+JOIN People a ON ag.pid = a.pid
+WHERE a.homeCity = 'Regina';
 
 
 
