@@ -61,6 +61,11 @@ ORDER BY o.totalUSD ASC;
 
 
 -- 4. my answer
+SELECT lastName
+FROM People
+WHERE pid IN (SELECT pid
+			   FROM Customers)
+ORDER by lastName DESC;
 
 
 -- Difference:; AI answer /10
