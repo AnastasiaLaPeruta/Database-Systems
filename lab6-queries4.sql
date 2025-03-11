@@ -61,14 +61,20 @@ ORDER BY o.totalUSD ASC;
 
 
 -- 4. my answer
-SELECT lastName
+SELECT People.lastName, coalesce(Orders.totalUSD, 0) AS total
 FROM People
-WHERE pid IN (SELECT pid
-			   FROM Customers)
+INNER JOIN Customers ON People.pid = Customers.pid
+LEFT OUTER JOIN Orders ON Customers.pid = Orders.custId
 ORDER by lastName DESC;
 
-
--- Difference:; AI answer /10
+-- Difference: summed the totals for each person, added comment, used multiple aliases, used different joins; AI answer 10/10
+-- 4. Display the last name of all customers (in reverse alphabetical order) and their total ordered by customer, using COALESCE to avoid NULL totals.
+SELECT p.lastName, COALESCE(SUM(o.totalUSD), 0) AS total_spent
+FROM Customers c
+LEFT JOIN Orders o ON c.pid = o.custId
+JOIN People p ON c.pid = p.pid
+GROUP BY p.lastName
+ORDER BY p.lastName DESC;
 
 
 
