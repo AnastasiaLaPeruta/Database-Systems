@@ -2,10 +2,19 @@
 
 
 -- 1. my answer
+SELECT city,
+count( prodId ),
+       RANK() OVER(ORDER BY count( prodId ) DESC)
+FROM Products
+GROUP BY city;
 
 
-
--- Difference:; AI answer /10
+-- Difference: added comments restating question, formatting, used DISTINCT and aliases; AI answer 10/10
+-- 1. Display the cities that make the most different kinds of products. Experiment with the rank() function.
+SELECT city, COUNT(DISTINCT prodId) AS product_count, 
+       RANK() OVER (ORDER BY COUNT(DISTINCT prodId) DESC) AS rank
+FROM Products
+GROUP BY city;
 
 
 
