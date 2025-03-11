@@ -41,10 +41,20 @@ ORDER BY name ASC;
 
 
 -- 3. my answer
- 
+SELECT People.lastName, Orders.prodId, Orders.totalUSD
+FROM Orders
+INNER JOIN People on Orders.custId = People.pid
+WHERE date_part('month', dateOrdered) = 03
+ORDER BY totalUSD ASC;
 
--- Difference:; AI answer /10
-
+-- Difference: added comment restating question, didn't specify inner, used 3 without 0; AI answer /10
+-- 3. Display the customer last name, product id ordered, and totalUSD for all orders made in March of any year, sorted by totalUSD from low to high.
+SELECT p.lastName, o.prodId, o.totalUSD
+FROM Orders o
+JOIN Customers c ON o.custId = c.pid
+JOIN People p ON c.pid = p.pid
+WHERE EXTRACT(MONTH FROM o.dateOrdered) = 3
+ORDER BY o.totalUSD ASC;
 
 
 
