@@ -133,10 +133,17 @@ WHERE ROUND(o.quantityOrdered * p.priceUSD, 2) <> o.totalUSD;
 
 
 -- 7. my answer
+SELECT firstName, lastName
+FROM People p
+INNER JOIN Customers c ON p.pid = c.pid
+INNER JOIN Agents a ON c.pid = a.pid;
 
-
--- Difference:; AI answer /10
-
+-- Difference: added comment, used p (I forgot to specify), just said JOIN, did agents join differently; AI answer 10/10
+-- 7. Display the first and last name of all customers who are also agents.
+SELECT p.firstName, p.lastName
+FROM People p
+JOIN Customers c ON p.pid = c.pid
+JOIN Agents a ON p.pid = a.pid;
 
 
 
