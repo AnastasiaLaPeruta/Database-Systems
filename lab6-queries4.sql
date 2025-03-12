@@ -189,12 +189,18 @@ SELECT * FROM PeopleAgents;
 
 
 -- 9. my answer
+SELECT firstName, lastName
+FROM PeopleCustomers
+WHERE pid IN (SELECT pid
+	      FROM PeopleAgents);
 
 
 
-
--- Difference:; AI answer /10
-
+-- Difference: added comment, used aliases, used join instead of subquery; AI answer 10/10
+-- 9. Display the first and last name of all customers who are also agents using the views.
+SELECT pc.firstName, pc.lastName
+FROM PeopleCustomers pc
+JOIN PeopleAgents pa ON pc.pid = pa.pid;
 
 
 
