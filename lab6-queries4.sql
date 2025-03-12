@@ -152,12 +152,12 @@ JOIN Agents a ON p.pid = a.pid;
 CREATE view PeopleCustomers AS
 SELECT p.pid, prefix, firstName, lastName, suffix, homeCity, DOB, paymentTerms, discountPct
 FROM People p
-FULL OUTER JOIN Customers c ON p.pid = c.pid;
+JOIN Customers c ON p.pid = c.pid;
 
 CREATE view PeopleAgents AS
 SELECT p.pid, prefix, firstName, lastName, suffix, homeCity, DOB, paymentTerms, commissionPct
 FROM People p
-FULL OUTER JOIN Agents a ON p.pid = a.pid;
+JOIN Agents a ON p.pid = a.pid;
 
 SELECT *
 FROM PeopleCustomers;
@@ -166,7 +166,7 @@ SELECT *
 FROM PeopleAgents;
 
 
--- Difference: interpreted question to mean only show people who are customers and then people who are agents, used alias to prefix every column in select statement,
+-- Difference: used alias to prefix every column in select statement,
 -- added comments; AI answer 4/10
 -- 8. Create a VIEW of all Customer and People data called PeopleCustomers, and another VIEW of all Agent and People data called PeopleAgents.
 CREATE VIEW PeopleCustomers AS
