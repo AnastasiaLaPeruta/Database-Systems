@@ -112,12 +112,22 @@ WHERE a.homeCity = 'Regina';
 
 
 -- 6. my answer
+SELECT ROUND(o.quantityOrdered * p.priceUSD, 2) AS actual_total, O.totalUSD
+FROM Products p
+INNER JOIN Orders o on p.prodId = o.prodId
+WHERE ROUND(o.quantityOrdered * p.priceUSD, 2) != o.totalUSD;
+
+The prices may have not been accounting for factors such as taxes, discounts, shipping and other fees.
 
 
 
-
--- Difference:; AI answer /10
-
+-- Difference: added comment, select is different, used <>; AI answer 10/10
+-- 6. Check accuracy of Orders.totalUSD by calculating it from other tables.
+SELECT o.orderNum, o.totalUSD AS recorded_total,
+       ROUND(o.quantityOrdered * p.priceUSD, 2) AS calculated_total
+FROM Orders o
+JOIN Products p ON o.prodId = p.prodId
+WHERE ROUND(o.quantityOrdered * p.priceUSD, 2) <> o.totalUSD;
 
 
 
