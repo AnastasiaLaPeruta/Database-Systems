@@ -117,7 +117,7 @@ FROM Products p
 INNER JOIN Orders o on p.prodId = o.prodId
 WHERE ROUND(o.quantityOrdered * p.priceUSD, 2) != o.totalUSD;
 
-The prices were not accounting for discount percentage that certain customers receive.
+--The prices were not accounting for discount percentage that certain customers receive.
 
 
 
@@ -210,7 +210,7 @@ JOIN PeopleAgents pa ON pc.pid = pa.pid;
 
 -- 10. my answer
 
-In #9 I am using a view which is basically a stored query. When it processes the #9 query it takes the view names and replaces them with the queries that are stored in them. 
+--In #9 I am using a view which is basically a stored query. When it processes the #9 query it takes the view names and replaces them with the queries that are stored in them. 
 
 
 
