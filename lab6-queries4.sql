@@ -47,7 +47,7 @@ INNER JOIN People on Orders.custId = People.pid
 WHERE date_part('month', dateOrdered) = 03
 ORDER BY totalUSD ASC;
 
--- Difference: added comment restating question, didn't specify inner, used 3 without 0; AI answer /10
+-- Difference: added comment restating question, didn't specify inner, used 3 without 0; AI answer 10/10
 -- 3. Display the customer last name, product id ordered, and totalUSD for all orders made in March of any year, sorted by totalUSD from low to high.
 SELECT p.lastName, o.prodId, o.totalUSD
 FROM Orders o
@@ -167,7 +167,7 @@ FROM PeopleAgents;
 
 
 -- Difference: used alias to prefix every column in select statement,
--- added comments; AI answer 4/10
+-- added comments; AI answer 10/10
 -- 8. Create a VIEW of all Customer and People data called PeopleCustomers, and another VIEW of all Agent and People data called PeopleAgents.
 CREATE VIEW PeopleCustomers AS
 SELECT p.pid, p.firstName, p.lastName, p.homeCity, c.paymentTerms, c.discountPct
@@ -210,8 +210,7 @@ JOIN PeopleAgents pa ON pc.pid = pa.pid;
 
 -- 10. my answer
 
-
--- Difference:; AI answer /10
+In #9 I am using a view which is basically a stored query. When it processes the #9 query it takes the view names and replaces them with the queries that are stored in them. 
 
 
 
